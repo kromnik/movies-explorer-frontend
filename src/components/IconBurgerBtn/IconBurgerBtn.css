@@ -1,0 +1,23 @@
+.icon__burger-btn {
+  width: 44px;
+  height: 44px;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  object-fit: cover;
+  background-color: transparent;
+  border: none;
+  transition: opacity .4s ease-in-out;
+}
+
+.icon__burger-btn:hover {
+  opacity: .6;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 767px) {
+  .icon__burger-btn {
+    width: 40px;
+    height: 43px;
+  }
+}

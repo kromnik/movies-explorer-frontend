@@ -1,0 +1,15 @@
+.icon__close-movie-btn {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  object-fit: cover;
+  border: none;
+  transition: opacity .4s ease-in-out;
+}
+
+.icon__close-movie-btn:hover {
+  opacity: .6;
+  cursor: pointer;
+}
