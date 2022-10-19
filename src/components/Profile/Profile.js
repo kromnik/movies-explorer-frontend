@@ -7,7 +7,7 @@ import { regExp } from '../../utils/regExp';
 
 function Profile({ loggedIn }) {
   return (
-    <section className='page-main'>
+    <div className='page-main'>
       <Header loggedIn={loggedIn} />
       <main className='profile'>
         <h2 className='profile__title'>Привет, Roki Kiro!</h2>
@@ -59,7 +59,7 @@ function Profile({ loggedIn }) {
           </Link>
         </form>   
       </main>
-    </section>
+    </div>
   )
 }
 

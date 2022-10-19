@@ -11,7 +11,7 @@ function Movies({ loggedIn }) {
   const [isLoading, setIsLoading] = useState(false);
   
   return (
-    <section className='page-main'>
+    <div className='page-main'>
       <Header loggedIn={loggedIn} />
       <main className='main__content main__content_size_medium main__content_size_least'> 
         <SearchForm />
@@ -22,7 +22,7 @@ function Movies({ loggedIn }) {
         )}
       </main>  
       <Footer />
-    </section>
+    </div>
   )
 }
 
