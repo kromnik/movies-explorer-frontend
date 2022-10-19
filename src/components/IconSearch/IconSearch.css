@@ -1,0 +1,16 @@
+.icon__search {
+  width: 22px;
+  height: 22px;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-size: cover;
+  background: transparent;
+  border: none;
+}
+
+@media screen and (max-width: 767px) {
+  .icon__search {
+    display: none;
+  }
+}

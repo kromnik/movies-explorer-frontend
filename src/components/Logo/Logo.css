@@ -1,0 +1,12 @@
+.logo {
+  width: 38px;
+  height: 38px;
+  display: flex;
+  object-fit: cover;
+  transition: opacity .4s ease-in-out;
+}
+
+.logo:hover {
+  opacity: .6;
+  cursor: pointer;
+}

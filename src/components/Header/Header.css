@@ -1,0 +1,23 @@
+.header__main {
+  margin: 0;
+  padding: 18px 70px;
+  display: flex;
+  align-items: center;
+  background: #073042;
+}
+
+.header__main_type_movies {
+  background: #202020;
+}
+
+@media screen and (max-width: 1279px) {
+  .header__main {
+    padding: 15px 30px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .header__main {
+    padding: 15px 14px;
+  }
+}

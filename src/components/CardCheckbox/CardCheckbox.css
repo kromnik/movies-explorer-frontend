@@ -1,0 +1,47 @@
+.card-checkbox {
+  margin: 0;
+  display: flex;
+  align-items: center;
+}
+
+.card-checkbox__label {
+  position: relative;
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  padding: 0;
+}
+
+.card-checkbox__input {
+  display: none;
+}
+
+.card-checkbox__tumbler {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 14px;
+  height: 14px;
+  border: 2px solid #FFFFFF;
+  border-radius: 50%;
+  transition: .4s ease-in-out;
+  cursor: pointer;
+}
+
+.card-checkbox__tumbler::before {
+  position: absolute;
+  content: "";
+  width: 14px;
+  height: 14px;
+  box-sizing: border-box;
+  border-radius: 50%;
+  background: #A0A0A0;
+  transition: .4s ease-in-out;
+}
+
+.card-checkbox__input:checked + .card-checkbox__tumbler::before {
+  background: #2BE080;
+}

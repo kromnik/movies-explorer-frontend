@@ -1,0 +1,15 @@
+.search-button {
+  margin: 0;
+  padding: 0;
+  width: 34px;
+  height: 34px;
+  box-sizing: border-box;
+  background: transparent;
+  border: none;
+  transition: opacity .4s ease-in-out;
+}
+
+.search-button:hover {
+  opacity: .6;
+  cursor: pointer;
+}
