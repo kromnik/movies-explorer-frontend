@@ -7,9 +7,9 @@ import { regExp } from '../../utils/regExp';
 
 function Profile({ loggedIn }) {
   return (
-    <main className='page-main'>
+    <section className='page-main'>
       <Header loggedIn={loggedIn} />
-      <section className='profile'>
+      <main className='profile'>
         <h2 className='profile__title'>Привет, Roki Kiro!</h2>
         <form 
           className='profile__form'
@@ -58,8 +58,8 @@ function Profile({ loggedIn }) {
             Выйти из аккаунта
           </Link>
         </form>   
-      </section>
-    </main>
+      </main>
+    </section>
   )
 }
 

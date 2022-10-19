@@ -11,18 +11,18 @@ function Movies({ loggedIn }) {
   const [isLoading, setIsLoading] = useState(false);
   
   return (
-    <main className='page-main'>
+    <section className='page-main'>
       <Header loggedIn={loggedIn} />
-      <div className='main__content main__content_size_medium main__content_size_least'> 
+      <main className='main__content main__content_size_medium main__content_size_least'> 
         <SearchForm />
         {isLoading ? (
           <Preloader />
         ) : (
           <MoviesCardList />
         )}
-      </div>  
+      </main>  
       <Footer />
-    </main>
+    </section>
   )
 }
 

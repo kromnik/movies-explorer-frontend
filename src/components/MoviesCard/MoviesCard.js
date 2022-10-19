@@ -13,7 +13,9 @@ function MoviesCard({ ...card }) {
       />
       <div className='movies-card__name-checkbox-block'>
         <h2 className='movies-card__name'>{card.nameRU}</h2>
-        <CardCheckbox />
+        <button className='movies-card__card-button' type='button'>
+          <CardCheckbox />
+        </button>
       </div>
       <span className='movies-card__duration'>{card.duration}</span>
     </article>

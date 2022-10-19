@@ -11,9 +11,9 @@ function SavedMovies({ loggedIn }) {
   const [isLoading, setIsLoading] = useState(false);
   
   return (
-    <main className='page-main'>
+    <section className='page-main'>
       <Header loggedIn={loggedIn}/>
-      <div 
+      <main 
         className='main__content main__content_size_medium main__content_size_least'
       > 
         <SearchForm />
@@ -25,9 +25,9 @@ function SavedMovies({ loggedIn }) {
               movies-card-list__else-btn_type_save" 
           />
         )}
-      </div>  
+      </main>  
       <Footer />
-    </main>
+    </section>
   )
 }
 

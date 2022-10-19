@@ -12,7 +12,9 @@ function SavedMoviesCard({ ...card }) {
       />
       <div className='movies-card__name-checkbox-block'>
         <h2 className='movies-card__name'>{card.nameRU}</h2>
-        <IconCloseMovieBtn />
+        <button className='movies-card__card-button' type='button'>
+          <IconCloseMovieBtn />
+        </button>
       </div>
       <span className='movies-card__duration'>{card.duration}</span>
     </article>

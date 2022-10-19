@@ -15,6 +15,7 @@ function SearchForm() {
               <input 
                 className='search__form-input'
                 type='text'
+                required
                 placeholder="Фильм"
                 autoComplete="off"
                 minLength="1"
