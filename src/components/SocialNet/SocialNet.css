@@ -1,0 +1,40 @@
+.social-net {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  transition: opacity .4s ease-in-out;
+}
+
+.social-net:hover {
+  opacity: .6;
+  cursor: pointer;
+}
+
+.social-link {
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 16px;
+  text-align: center;
+  text-decoration: none;
+  color: #FFFFFF;
+}
+
+.social-link_type_medium {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+}
+
+@media screen and (max-width: 767px) {
+  .social-link {
+    font-size: 12px;
+    line-height: 15px;
+  }
+  .social-link_type_medium {
+    font-size: 14px;
+    line-height: 17px;
+  }
+}
+
