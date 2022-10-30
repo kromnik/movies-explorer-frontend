@@ -19,7 +19,7 @@ function NavigationMobile({ loggedIn }) {
             type="button"
             onClick={handleNavButtonClick}
           >
-            <IconCloseBtn className='icon__close-btn'/>
+            <IconCloseBtn />
           </button>
         ) : ( 
           <button 

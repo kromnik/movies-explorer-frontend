@@ -51,6 +51,7 @@
 @media screen and (max-width: 767px) {
   .techs {
     padding: 70px 0;
+    background: #202020;
   }
   .techs__title {
     margin: 60px auto 24px;

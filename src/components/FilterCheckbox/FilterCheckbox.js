@@ -1,13 +1,22 @@
-import React from 'react';
+import { useState } from 'react';
 import './FilterCheckbox.css';
 
-function FilterCheckbox() {
+function FilterCheckbox({ onFilterCheckBoxToggle }) {
+  const [isChecked, setIsChecked] = useState(false);
+  
+  function handleChange(e) {
+    onFilterCheckBoxToggle(!isChecked);
+    setIsChecked(e.target.checked);
+  }
+  
   return (
     <div className='filter-checkbox'>
       <label className='filter-checkbox__label'>
         <input 
           className='filter-checkbox__input'
-          type='checkbox' 
+          type='checkbox'
+          checked={isChecked}
+          onChange={(e) => handleChange(e)}
         />
         <span className='filter-checkbox__tumbler'></span>
       </label>

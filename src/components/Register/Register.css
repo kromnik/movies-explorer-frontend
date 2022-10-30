@@ -33,7 +33,6 @@
 .auth-reg__input-block {
   margin: 0;
   padding-bottom: 0;
-  border-bottom: 1px solid #424242;
   display: flex;
   flex-direction: column;
 }
@@ -49,10 +48,12 @@
 }
 
 .auth-reg__input {
+  width: 396px;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   border: none;
+  border-bottom: 1px solid #424242;
   background-color: inherit;
   font-family: inherit;
   font-size: 14px;
@@ -64,18 +65,27 @@
   outline: none;
 }
 
+.auth-reg__input_color_red {
+  color: #EE3465;
+}
+
 .auth-reg__input:focus {
   border-bottom: 1px solid #4285F4;
 }
 
 .span__input-error {
-  margin: 2px 0 12px;
+  width: 396px;
+  margin: 5px 0 9px;
+  min-height: 10px;
   padding: 0;
   box-sizing: border-box;
   font-weight: 400;
   font-size: 10px;
   line-height: 10px;
   color: #EE3465;
+  /* text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden; */
 }
 
 .span__input-error:last-of-type {
@@ -84,6 +94,7 @@
 
 .auth-reg__input-error {
   margin: 0 0 134px;
+  min-height: 12px;
   padding: 0;
   font-weight: 400;
   font-size: 10px;
@@ -108,6 +119,12 @@
   line-height: 17px;
   color: #FFFFFF;
   transition: opacity .4s ease-in-out;
+}
+
+.auth-reg__submit-button_disabled {
+  background: #272727;
+  color: #C2C2C2;
+  pointer-events: none;
 }
 
 .auth-reg__submit-button:hover {
@@ -171,5 +188,13 @@
 
   .signup-signin__link {
     margin-left: 7px;
+  }
+
+  .auth-reg__input {
+    width: 260px;
+  }
+
+  .span__input-error {
+    width: 260px;
   }
 }

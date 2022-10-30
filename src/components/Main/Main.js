@@ -9,17 +9,19 @@ import AboutMe from '../AboutMe/AboutMe';
 import Footer from '../Footer/Footer';
 
 
-function Main() {
+function Main({ loggedIn }) {
   return (
-    <main className='page-main'>
-      <Header loggedIn={false}/>
-      <Promo />
-      <NavTab />
-      <AboutProject />
-      <Techs />
-      <AboutMe />
+    <div className='page-main'>
+      <Header loggedIn={loggedIn}/>
+      <main className='main'>
+        <Promo />
+        <NavTab />
+        <AboutProject />
+        <Techs />
+        <AboutMe />
+      </main>
       <Footer />
-    </main>
+    </div>
   );
 }
 

@@ -1,4 +1,4 @@
-.movies-card {
+.movie-card {
   max-width: 270px;
   margin: 0;
   padding: 0;
@@ -11,7 +11,18 @@
   justify-content: space-between;
 }
 
-.movies-card__image {
+.movie-card__link {
+  text-decoration: none;
+  width: 100%;
+  transition: opacity .4s ease-in-out;
+}
+
+.movie-card__link:hover {
+  opacity: .6;
+  cursor: pointer;
+}
+
+.movie-card__image {
   width: 100%;
   height: 151px;
   margin: 0;
@@ -23,7 +34,7 @@
   border: none;
 }
 
-.movies-card__name-checkbox-block {
+.movie-card__name-checkbox-block {
   margin: 0;
   padding: 14px 12px 10px;
   display: flex;
@@ -32,7 +43,7 @@
   column-gap: 24px;
 }
 
-.movies-card__name {
+.movie-card__name {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -44,7 +55,15 @@
   overflow: hidden;
 }
 
-.movies-card__duration {
+.movie-card__card-button {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  border: none;
+  background: transparent;
+}
+
+.movie-card__duration {
   margin: 0 auto 14px 12px;
   padding: 0;
   box-sizing: border-box;
@@ -55,29 +74,29 @@
 }
 
 @media screen and (max-width: 1279px) {
-  .movies-card {
+  .movie-card {
     max-width: 339px;
   }
 
-  .movies-card__image {
+  .movie-card__image {
     height: 190px;
   }
 
-  .movies-card__name-checkbox-block {
+  .movie-card__name-checkbox-block {
     column-gap: 93px;
   }
 }
 
 @media screen and (max-width: 767px) {
-  .movies-card {
+  .movie-card {
     max-width: 300px;
   }
 
-  .movies-card__image {
+  .movie-card__image {
     height: 168px;
   }
 
-  .movies-card__name-checkbox-block {
+  .movie-card__name-checkbox-block {
     column-gap: 54px;
   }
 }

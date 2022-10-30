@@ -2,15 +2,11 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import './PageNotFound.css';
 
-function PageNotFound(loggedIn) {
+function PageNotFound() {
   const history = useHistory();
 
   function handleClick() {
-    if (loggedIn) {
       history.goBack();
-    } else {
-      history.push("/");
-    }
   }
   
   return (
