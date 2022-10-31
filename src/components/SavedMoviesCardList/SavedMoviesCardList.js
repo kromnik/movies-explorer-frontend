@@ -2,16 +2,15 @@ import { useState, useEffect, useCallback } from 'react';
 
 import Preloader from '../Preloader/Preloader';
 import SavedMovieCard from "../SavedMovieCard/SavedMovieCard";
-import { 
+import {
   CARDS_ARRAY_MAX_WIN_SIZE,
   CARDS_ARRAY_MEDIUM_WIN_SIZE,
   CARDS_ARRAY_MIN_WIN_SIZE,
- } from '../../utils/constants';
+} from '../../utils/constants';
 
 function SavedMoviesCardList(props) {
   const windowWidth = window.innerWidth;
   const [cardsSavedMoviesArray, setCardsSavedMoviesArray] = useState(0);
-  const savedMoviesCardList = props.savedMoviesCardList || [];
 
   const renderCardsSavedMovies = useCallback(() => {
     if (windowWidth > 1279) {
@@ -22,7 +21,7 @@ function SavedMoviesCardList(props) {
       setCardsSavedMoviesArray(CARDS_ARRAY_MIN_WIN_SIZE);
     }
   }, [windowWidth]);
-  
+
   useEffect(() => renderCardsSavedMovies(), [renderCardsSavedMovies]);
 
   useEffect(() => {
@@ -31,20 +30,20 @@ function SavedMoviesCardList(props) {
       window.removeEventListener("resize", renderCardsSavedMovies);
     };
   }, [renderCardsSavedMovies]);
-  
+
   return (
     <>
-      {props.isLoading ? 
+      {props.isLoading ?
         <Preloader /> : (
           <>
-            {props.message && 
-            <span className='movies-card-list__message'>
-              {props.message}
-            </span>}
+            {props.message &&
+              <span className='movies-card-list__message'>
+                {props.message}
+              </span>}
             <section className="movies-card-list__elements">
-              {savedMoviesCardList.slice(0, cardsSavedMoviesArray).map((movie) => {
+              {props.savedMoviesCardList.slice(0, cardsSavedMoviesArray).map((movie) => {
                 return (
-                  <SavedMovieCard 
+                  <SavedMovieCard
                     key={movie._id}
                     card={movie}
                     onDeleteSavedMovie={props.onDeleteSavedMovie}
@@ -54,7 +53,7 @@ function SavedMoviesCardList(props) {
             </section>
           </>
         )
-      }      
+      }
     </>
   );
 }

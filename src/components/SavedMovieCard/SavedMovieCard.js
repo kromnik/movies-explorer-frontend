@@ -1,15 +1,14 @@
 import React from 'react';
-
 import IconCloseMovieBtn from '../IconCloseMovieBtn/IconCloseMovieBtn';
 
 function SavedMovieCard({ card, onDeleteSavedMovie }) {
   function handleCardButtonClick() {
     onDeleteSavedMovie({ id: card.movieId });
   };
-  
+
   return (
     <article className='movie-card'>
-      <a 
+      <a
         className='movie-card__link'
         href={card.trailerLink}
         target="_blank"
@@ -20,11 +19,11 @@ function SavedMovieCard({ card, onDeleteSavedMovie }) {
           src={card.image}
           alt="постер фильма"
         />
-      </a> 
+      </a>
       <div className='movie-card__name-checkbox-block'>
         <h2 className='movie-card__name'>{card.nameRU || card.nameEN}</h2>
-        <button 
-          className='movie-card__card-button' 
+        <button
+          className='movie-card__card-button'
           type='button'
           onClick={handleCardButtonClick}
         >

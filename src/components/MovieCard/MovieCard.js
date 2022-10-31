@@ -6,13 +6,12 @@ import { MOVIES_IMAGE_URL } from '../../utils/constants';
 
 function MovieCard({ card, onChangeSaveState, isSaved }) {
   function handleCardButtonClick() {
-    console.log(card);
     onChangeSaveState(card);
   };
 
   return (
     <article className='movie-card'>
-      <a 
+      <a
         className='movie-card__link'
         href={card.trailerLink}
         target="_blank"
@@ -23,14 +22,11 @@ function MovieCard({ card, onChangeSaveState, isSaved }) {
           src={`${MOVIES_IMAGE_URL}${card.image.url}`}
           alt="постер фильма"
         />
-      </a>  
+      </a>
       <div className='movie-card__name-checkbox-block'>
         <h2 className='movie-card__name'>{card.nameRU || card.nameEN}</h2>
         <div className='movie-card__card-button'>
-          <CardCheckbox 
-            isSaved={isSaved}
-            onClick={handleCardButtonClick}
-          />
+          <CardCheckbox isSaved={isSaved} onClick={handleCardButtonClick} />
         </div>
       </div>
       <span className='movie-card__duration'>{card.duration}</span>

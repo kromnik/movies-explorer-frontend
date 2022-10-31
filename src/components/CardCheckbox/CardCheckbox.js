@@ -3,11 +3,9 @@ import './CardCheckbox.css';
 
 function CardCheckbox({ onClick, isSaved }) {
   return (
-    <div className='card-checkbox'
-         
-    >
+    <div className='card-checkbox'>
       <label className='card-checkbox__label'>
-        <input 
+        <input
           className='card-checkbox__input'
           type='checkbox'
           defaultChecked={isSaved}

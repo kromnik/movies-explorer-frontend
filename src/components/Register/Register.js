@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import './Register.css'
 
 import Logo from '../Logo/Logo';
-// import { regExp } from '../../utils/regExp';
+import { regExp } from '../../utils/regExp';
 import { useFormWithValidation } from '../../utils/validation';
 
 function Register(props) {
@@ -41,9 +41,10 @@ function Register(props) {
             autoComplete="off"
             minLength="2"
             maxLength="30"
-            // pattern={regExp.isValidName}
+            pattern={regExp.isValidName}
             value={values.name || ''}
             onChange={handleChange}
+            disabled={props.isLoading}
           />
         </div>
         <span className="span__input-error" id='name-err'>{errors.name}</span>
@@ -55,9 +56,9 @@ function Register(props) {
             name="email"
             required
             autoComplete="off"
-            // pattern={regExp.isEmail}
             value={values.email || ''}
             onChange={handleChange}
+            disabled={props.isLoading}
           />
         </div>
         <span className="span__input-error" id='email-err'>{errors.email}</span>
@@ -72,6 +73,7 @@ function Register(props) {
             minLength="8"
             value={values.password || ''}
             onChange={handleChange}
+            disabled={props.isLoading}
           />
         </div>
         <span className="span__input-error" id='password-err'>{errors.password}</span>

@@ -1,5 +1,5 @@
 const MOVIES_API_URL = 'https://api.nomoreparties.co/beatfilm-movies';
-const MAIN_API_URL = 'http://localhost:3000';
+const MAIN_API_URL = 'https://api.movies-explorer.kiro.nomorepartiesxyz.ru';
 const MOVIES_IMAGE_URL ='https://api.nomoreparties.co';
 
 const SHORT_MOVIE = 40;

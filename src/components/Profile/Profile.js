@@ -4,13 +4,17 @@ import './Profile.css';
 
 import Header from '../Header/Header';
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
-// import { regExp } from '../../utils/regExp';
 import { useFormWithValidation } from '../../utils/validation';
+import { regExp } from '../../utils/regExp';
 
 function Profile(props) {
   const currentUser = useContext(CurrentUserContext);
   const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
   
+  useEffect(() => {
+    props.setMessage()
+  }, []);
+
   useEffect(() => {
     currentUser && resetForm(currentUser, {}, true);
   }, [currentUser, resetForm]);
@@ -40,7 +44,7 @@ function Profile(props) {
               autoComplete="off"
               minLength="2"
               maxLength="30"
-              // pattern={regExp.isValidName}
+              pattern={regExp.isValidName}
               value={values.name ?? currentUser.name}
               onChange={handleChange}
             />
@@ -55,7 +59,6 @@ function Profile(props) {
               required
               placeholder="Email"
               autoComplete="off"
-              // pattern={regExp.isEmail}
               value={values.email ?? currentUser.email}
               onChange={handleChange}
             />

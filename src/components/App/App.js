@@ -10,6 +10,7 @@ import Profile from "../Profile/Profile";
 import Register from "../Register/Register";
 import Login from "../Login/Login";
 import PageNotFound from "../PageNotFound/PageNotFound";
+import Preloader from "../Preloader/Preloader";
 import moviesApi from "../../utils/MoviesApi";
 import mainApi from "../../utils/MainApi";
 import { SHORT_MOVIE } from "../../utils/constants";
@@ -26,7 +27,7 @@ import {
 
 function App() {
   const [currentUser, setCurrentUser] = useState({ name: "", email: "" });
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(!!localStorage.jwt);
   const [movies, setMovies] = useState([]);
   const [savedMovies, setSavedMovies] = useState([]);
   const [foundMovies, setFoundMovies] = useState([]);
@@ -36,7 +37,7 @@ function App() {
   const [formSending, setFormSending] = useState(false);
   const [message, setMessage] = useState(null);
   const history = useHistory();
-  const token  = localStorage.getItem("jwt");
+  const token = localStorage.getItem("jwt");
   const resetMessage = () => {
     setMessage(null);
   };
@@ -46,7 +47,7 @@ function App() {
       const currentUserLocalStorage = localStorage.getItem("currentUser");
       const moviesLocalStorage = localStorage.getItem("movies");
       const savedMoviesLocalStorage = localStorage.getItem("savedMovies");
-      
+
       if (currentUserLocalStorage && savedMoviesLocalStorage) {
         setCurrentUser(JSON.parse(currentUserLocalStorage));
         setSavedMovies(JSON.parse(savedMoviesLocalStorage));
@@ -108,7 +109,7 @@ function App() {
   }
 
   function handleSortShortMovies(movies) {
-    const sortShortMoviesArray = movies.filter((movie) => 
+    const sortShortMoviesArray = movies.filter((movie) =>
       movie.duration <= SHORT_MOVIE
     );
     return sortShortMoviesArray;
@@ -117,13 +118,13 @@ function App() {
   function handleSearchMovies(query) {
     const searchQuery = query.toLowerCase();
     const foundMoviesResult = movies.filter((movie) => {
-      return movie.nameRU.toLowerCase().includes(searchQuery) || 
-      movie.nameEN.toLowerCase().includes(searchQuery); 
+      return movie.nameRU.toLowerCase().includes(searchQuery) ||
+        movie.nameEN.toLowerCase().includes(searchQuery);
     });
 
     if (foundMoviesResult.length === 0) {
       setFoundMovies([]);
-      setMessage(QUERY_NOT_FOUND_MESSAGE);
+      responseMessage(QUERY_NOT_FOUND_MESSAGE);
     } else {
       setFoundMovies(foundMoviesResult);
       resetMessage();
@@ -132,12 +133,11 @@ function App() {
   };
 
   function handleSaveMovie(movie) {
-    console.log(token);
     mainApi
       .saveMovie(movie, token)
       .then((res) => {
         localStorage.setItem("savedMovies", JSON.stringify([res, ...savedMovies]));
-        setSavedMovies([res, ...savedMovies]);
+        setSavedMovies(prev => [res, ...prev]);
         resetMessage();
       })
       .catch((err) => {
@@ -155,13 +155,13 @@ function App() {
     }
 
     const foundSavedMoviesResult = savedMovies.filter((movie) => {
-      return movie.nameRU.toLowerCase().includes(searchQuery) || 
-      movie.nameEN.toLowerCase().includes(searchQuery); 
+      return movie.nameRU.toLowerCase().includes(searchQuery) ||
+        movie.nameEN.toLowerCase().includes(searchQuery);
     });
 
     if (foundSavedMoviesResult.length === 0) {
       setFoundSavedMovies([]);
-      setMessage(QUERY_NOT_FOUND_MESSAGE);
+      responseMessage(QUERY_NOT_FOUND_MESSAGE);
     } else {
       setFoundSavedMovies(foundSavedMoviesResult);
       resetMessage();
@@ -174,7 +174,7 @@ function App() {
       .deleteMovie(remoteMovie._id, token)
       .then(() => {
         localStorage.setItem(
-          "savedMovies", 
+          "savedMovies",
           JSON.stringify(savedMovies.filter((i) => i._id !== remoteMovie._id))
         );
         setSavedMovies(savedMovies.filter((i) => i._id !== remoteMovie._id));
@@ -205,6 +205,7 @@ function App() {
           return responseMessage(SERVER_ERROR_MESSAGE);
         }
         console.log(err);
+        responseMessage(`Что то пошло не так, возможно ошибка соединения с сервером`);
       })
       .finally(() => setFormSending(false));
   };
@@ -225,6 +226,7 @@ function App() {
           return responseMessage(SERVER_ERROR_MESSAGE);
         }
         console.log(err);
+        responseMessage(`Что то пошло не так, возможно ошибка соединения с сервером`);
       })
       .finally(() => setFormSending(false));
   };
@@ -256,76 +258,83 @@ function App() {
       email: "",
     });
     localStorage.clear();
+    setFoundMovies([]);
     resetMessage();
     history.push("/");
   };
-
-
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
         <div className="page-container">
-          <Switch>
-            <Route exact path="/">
-              <Main loggedIn={loggedIn} />
-            </Route>
-            <ProtectedRoute 
-              path="/movies"
-              component={Movies}
-              loggedIn={loggedIn}
-              isLoading={moviesApiLoading}
-              foundMovies={foundMovies}
-              savedMovies={savedMovies}
-              onSearchMovies={handleSearchMovies}
-              onSaveMovie={handleSaveMovie}
-              onSortShortMovie={handleSortShortMovies}
-              onDeleteSavedMovie={handleDeleteMovie}            
-              message={message}
-            />
-            <ProtectedRoute 
-              path="/saved-movies"
-              component={SavedMovies}
-              loggedIn={loggedIn}
-              isLoading={mainApiLoading}
-              savedMovies={savedMovies}
-              foundSavedMovies={foundSavedMovies}
-              onSearchSavedMovies={handleSearchSavedMovies}
-              onSortShortMovie={handleSortShortMovies}
-              onDeleteSavedMovie={handleDeleteMovie}                        
-              message={message}
-            />
-            <ProtectedRoute 
-              path="/profile"
-              component={Profile}
-              loggedIn={loggedIn}
-              isLoading={formSending}
-              onUpdateProfile={handleUpdateProfile}
-              onSignOut={handleSignOut}
-              message={message}
-            />
-            <Route path="/signup">
-              {loggedIn ? <Redirect to='/movies' /> :
-                <Register
-                  onRegister={handleRegisterSubmit}
-                  isLoading={formSending}
-                  message={message}
-                />
-              }
-            </Route>
-            <Route path="/signin">
-              {loggedIn ? <Redirect to='/movies' /> :
-                <Login
-                  onLogin={handleLoginSubmit}
-                  isLoading={formSending}
-                  message={message}
-                />
-              }
-            </Route>
-            <Route path="*">
-              <PageNotFound />
-            </Route>
-          </Switch>
+        {moviesApiLoading ? (
+            <Preloader />
+          ) : (
+            <Switch>
+              <Route exact path="/">
+                <Main loggedIn={loggedIn} />
+              </Route>
+              <ProtectedRoute
+                path="/movies"
+                component={Movies}
+                loggedIn={loggedIn}
+                isLoading={moviesApiLoading}
+                foundMovies={foundMovies}
+                savedMovies={savedMovies}
+                onSearchMovies={handleSearchMovies}
+                onSaveMovie={handleSaveMovie}
+                onSortShortMovie={handleSortShortMovies}
+                onDeleteSavedMovie={handleDeleteMovie}
+                message={message}
+                setMessage={setMessage}
+              />
+              <ProtectedRoute
+                path="/saved-movies"
+                component={SavedMovies}
+                loggedIn={loggedIn}
+                isLoading={mainApiLoading}
+                savedMovies={savedMovies}
+                foundSavedMovies={foundSavedMovies}
+                setFoundSavedMovies={setFoundSavedMovies}
+                onSearchSavedMovies={handleSearchSavedMovies}
+                onSortShortMovie={handleSortShortMovies}
+                onDeleteSavedMovie={handleDeleteMovie}
+                message={message}
+                setMessage={setMessage}
+              />
+              <ProtectedRoute
+                path="/profile"
+                component={Profile}
+                loggedIn={loggedIn}
+                isLoading={formSending}
+                onUpdateProfile={handleUpdateProfile}
+                onSignOut={handleSignOut}
+                message={message}
+                setMessage={setMessage}
+              />
+              <Route path="/signup">
+                {loggedIn ? <Redirect to='/movies' /> :
+                  <Register
+                    onRegister={handleRegisterSubmit}
+                    isLoading={formSending}
+                    message={message}
+                  />
+                }
+              </Route>
+              <Route path="/signin">
+                {loggedIn ? <Redirect to='/movies' /> :
+                  <Login
+                    onLogin={handleLoginSubmit}
+                    isLoading={formSending}
+                    message={message}
+                  />
+                }
+              </Route>
+              <Route path="*">
+                <PageNotFound />
+              </Route>
+            </Switch>
+          )}  
         </div>
       </div>
     </CurrentUserContext.Provider>

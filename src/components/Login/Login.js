@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import './Login.css'
 
 import Logo from '../Logo/Logo';
-// import { regExp } from '../../utils/regExp';
 import { useFormWithValidation } from '../../utils/validation';
 
 function Login(props) {
@@ -40,9 +39,9 @@ function Login(props) {
             name="email"
             required
             autoComplete="off"
-            // pattern={regExp.isEmail}
             value={values.email || ''}
             onChange={handleChange}
+            disabled={props.isLoading}
           />
         </div>
         <span className="span__input-error" id='email-err'>{errors.email}</span>
@@ -57,6 +56,7 @@ function Login(props) {
             minLength="8"
             value={values.password || ''}
             onChange={handleChange}
+            disabled={props.isLoading}
           />
         </div>
         <span className="span__input-error" id='password-err'>{errors.password}</span>

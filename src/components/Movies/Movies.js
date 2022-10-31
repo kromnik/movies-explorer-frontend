@@ -11,15 +11,19 @@ function Movies({ onSortShortMovie, foundMovies, ...props }) {
   const [isChecked, setIsChecked] = useState(false);
 
   useEffect(() => {
-    isChecked && setShortMovies(onSortShortMovie(foundMovies)); 
-  }, [isChecked, onSortShortMovie, foundMovies]);
+    props.setMessage()
+  }, []);
   
+  useEffect(() => {
+    isChecked && setShortMovies(onSortShortMovie(foundMovies));
+  }, [isChecked, onSortShortMovie, foundMovies]);
+
   return (
     <div className='page-main'>
       <Header loggedIn={props.loggedIn} />
-      <main className='main__content main__content_size_medium main__content_size_least'> 
+      <main className='main__content main__content_size_medium main__content_size_least'>
         <SearchForm onSearchMovies={props.onSearchMovies} setIsChecked={setIsChecked} />
-        <MoviesCardList 
+        <MoviesCardList
           isLoading={props.isLoading}
           moviesCardList={isChecked ? shortMovies : foundMovies}
           savedMovies={props.savedMovies}
@@ -27,7 +31,7 @@ function Movies({ onSortShortMovie, foundMovies, ...props }) {
           onDeleteSavedMovie={props.onDeleteSavedMovie}
           message={props.message}
         />
-      </main>  
+      </main>
       <Footer />
     </div>
   )

@@ -34,7 +34,7 @@
 
 .profile__input-block:last-of-type {
   border: none;
-  padding: 17px 0 0;
+  padding: 0 0 17px;
 }
 
 .profile__input-title {
