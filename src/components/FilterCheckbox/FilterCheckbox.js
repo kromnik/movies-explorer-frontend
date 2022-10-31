@@ -16,7 +16,7 @@ function FilterCheckbox({ onFilterCheckBoxToggle }) {
           className='filter-checkbox__input'
           type='checkbox'
           checked={isChecked}
-          onChange={(e) => handleChange(e)}
+          onChange={handleChange}
         />
         <span className='filter-checkbox__tumbler'></span>
       </label>
