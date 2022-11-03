@@ -10,7 +10,7 @@ import Profile from "../Profile/Profile";
 import Register from "../Register/Register";
 import Login from "../Login/Login";
 import PageNotFound from "../PageNotFound/PageNotFound";
-import Preloader from "../Preloader/Preloader";
+// import Preloader from "../Preloader/Preloader";
 import moviesApi from "../../utils/MoviesApi";
 import mainApi from "../../utils/MainApi";
 import { SHORT_MOVIE } from "../../utils/constants";
@@ -45,7 +45,7 @@ function App() {
   useEffect(() => {
     if (loggedIn) {
       const currentUserLocalStorage = localStorage.getItem("currentUser");
-      const moviesLocalStorage = localStorage.getItem("movies");
+      // const moviesLocalStorage = localStorage.getItem("movies");
       const savedMoviesLocalStorage = localStorage.getItem("savedMovies");
 
       if (currentUserLocalStorage && savedMoviesLocalStorage) {
@@ -77,24 +77,24 @@ function App() {
           });
       }
 
-      if (moviesLocalStorage) {
-        setMovies(JSON.parse(moviesLocalStorage));
-        setMoviesApiLoading(false);
-      } else {
-        moviesApi
-          .getMovies()
-          .then((res) => {
-            localStorage.setItem("movies", JSON.stringify(res || []));
-            setMovies(res || []);
-            setMoviesApiLoading(false);
-          })
-          .catch((err) => {
-            if (err.status === 500) {
-              setMessage(QUERY_SERVER_ERROR_MESSAGE);
-            }
-            console.log(err);
-          });
-      }
+      // if (moviesLocalStorage) {
+      //   setMovies(JSON.parse(moviesLocalStorage));
+      //   setMoviesApiLoading(false);
+      // } else {
+      //   moviesApi
+      //     .getMovies()
+      //     .then((res) => {
+      //       localStorage.setItem("movies", JSON.stringify(res || []));
+      //       setMovies(res || []);
+      //       setMoviesApiLoading(false);
+      //     })
+      //     .catch((err) => {
+      //       if (err.status === 500) {
+      //         setMessage(QUERY_SERVER_ERROR_MESSAGE);
+      //       }
+      //       console.log(err);
+      //     });
+      // }
     }
   }, [loggedIn, token]);
 
@@ -116,23 +116,48 @@ function App() {
   }
 
   function handleSearchMovies(query) {
+    const moviesLocalStorage = JSON.parse(localStorage.getItem("movies"));
+    if (moviesLocalStorage && moviesLocalStorage.length > 0) {
+      setMovies(moviesLocalStorage);
+      console.log(moviesLocalStorage);
+    } else {
+      setMoviesApiLoading(true);
+      moviesApi
+        .getMovies()
+        .then((res) => {
+          console.log(res);
+          localStorage.setItem("movies", JSON.stringify(res || []));
+          setMovies(res || []);
+        })
+        .catch((err) => {
+          if (err.status === 500) {
+            setMessage(QUERY_SERVER_ERROR_MESSAGE);
+          }
+          console.log(err);
+        })
+        .finally(() => setMoviesApiLoading(false));
+    };   
+    
     const searchQuery = query.toLowerCase();
+    console.log(movies);
     const foundMoviesResult = movies.filter((movie) => {
       return movie.nameRU.toLowerCase().includes(searchQuery) ||
         movie.nameEN.toLowerCase().includes(searchQuery);
     });
-
+    console.log(foundMoviesResult);
     if (foundMoviesResult.length === 0) {
       setFoundMovies([]);
       responseMessage(QUERY_NOT_FOUND_MESSAGE);
     } else {
       setFoundMovies(foundMoviesResult);
+      localStorage.setItem("query", searchQuery);
       resetMessage();
     };
 
   };
 
   function handleSaveMovie(movie) {
+    console.log(token);
     mainApi
       .saveMovie(movie, token)
       .then((res) => {
@@ -142,7 +167,10 @@ function App() {
       })
       .catch((err) => {
         console.log(err);
-        setMessage(`Ошибка сохранения, код ${err}`);
+        setMessage(`Ошибка сохранения, код ${err.status}`);
+        if (err) {
+          return handleSignOut(); 
+        }  
       });
   };
 
@@ -182,7 +210,10 @@ function App() {
       })
       .catch((err) => {
         console.log(err);
-        setMessage(`Ошибка удаления, код ${err}`);
+        setMessage(`Ошибка удаления, код ${err.status}`);
+        if (err) {
+          return handleSignOut(); 
+        }  
       });
   };
 
@@ -247,6 +278,9 @@ function App() {
           return responseMessage(SERVER_ERROR_MESSAGE);
         }
         console.log(err);
+        if (err) {
+          return handleSignOut(); 
+        }  
       })
       .finally(() => setFormSending(false));
   };
@@ -257,9 +291,13 @@ function App() {
       name: "",
       email: "",
     });
-    localStorage.clear();
+    localStorage.removeItem("jwt");
     setFoundMovies([]);
+    setSavedMovies([]);
+    setMovies([]);
+    setFoundSavedMovies([]);
     resetMessage();
+    localStorage.clear();
     history.push("/");
   };
 
@@ -267,9 +305,6 @@ function App() {
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
         <div className="page-container">
-        {moviesApiLoading ? (
-            <Preloader />
-          ) : (
             <Switch>
               <Route exact path="/">
                 <Main loggedIn={loggedIn} />
@@ -333,8 +368,7 @@ function App() {
               <Route path="*">
                 <PageNotFound />
               </Route>
-            </Switch>
-          )}  
+            </Switch> 
         </div>
       </div>
     </CurrentUserContext.Provider>

@@ -56,6 +56,7 @@ function Register(props) {
             name="email"
             required
             autoComplete="off"
+            pattern={regExp.isEmail}
             value={values.email || ''}
             onChange={handleChange}
             disabled={props.isLoading}

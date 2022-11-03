@@ -59,6 +59,7 @@ function Profile(props) {
               required
               placeholder="Email"
               autoComplete="off"
+              pattern={regExp.isEmail}
               value={values.email ?? currentUser.email}
               onChange={handleChange}
             />

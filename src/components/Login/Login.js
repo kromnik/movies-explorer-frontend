@@ -4,6 +4,7 @@ import './Login.css'
 
 import Logo from '../Logo/Logo';
 import { useFormWithValidation } from '../../utils/validation';
+import { regExp } from '../../utils/regExp';
 
 function Login(props) {
   const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
@@ -39,6 +40,7 @@ function Login(props) {
             name="email"
             required
             autoComplete="off"
+            pattern={regExp.isEmail}
             value={values.email || ''}
             onChange={handleChange}
             disabled={props.isLoading}

@@ -1,7 +1,7 @@
 .movies-card-list__elements {
   width: 100%;
   margin: 0;
-  padding: 70px 0 30px;
+  padding: 40px 0 30px;
   box-sizing: border-box;
   display: grid;
   grid-template-columns: repeat(4, 1fr);

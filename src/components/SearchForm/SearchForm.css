@@ -57,6 +57,7 @@
 .search__input-error {
   position: absolute;
   left: 33%;
+  min-height: 30px;
   font-weight: 400;
   color: #EE3465;
   font-size: 18px;

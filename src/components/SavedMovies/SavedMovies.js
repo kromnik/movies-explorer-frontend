@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import './SavedMovies.css';
 
 import Header from '../Header/Header';
-import SearchForm from '../SearchForm/SearchForm';
+import SavedSearchForm from '../SavedSearchForm/SavedSearchForm';
 import SavedMoviesCardList from '../SavedMoviesCardList/SavedMoviesCardList';
 import Footer from '../Footer/Footer';
 
@@ -31,7 +31,7 @@ function SavedMovies({ onSortShortMovie, savedMovies, foundSavedMovies, ...props
     <div className='page-main'>
       <Header loggedIn={props.loggedIn} />
       <main className='main__content main__content_size_medium main__content_size_least'>
-        <SearchForm onSearchMovies={props.onSearchSavedMovies} setIsChecked={setIsChecked} />
+        <SavedSearchForm onSearchMovies={props.onSearchSavedMovies} setIsChecked={setIsChecked} />
         <SavedMoviesCardList
           isLoading={props.isLoading}
           savedMoviesCardList={isChecked ? shortMovies : savedMoviesArray}
