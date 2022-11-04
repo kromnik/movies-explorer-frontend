@@ -128,6 +128,7 @@ function App() {
           console.log(res);
           localStorage.setItem("movies", JSON.stringify(res || []));
           setMovies(res || []);
+          console.log(moviesLocalStorage);
         })
         .catch((err) => {
           if (err.status === 500) {

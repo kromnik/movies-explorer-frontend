@@ -7,6 +7,7 @@ function FilterCheckbox({ onFilterCheckBoxToggle }) {
   function handleChange(e) {
     onFilterCheckBoxToggle(!isChecked);
     setIsChecked(e.target.checked);
+    localStorage.setItem("checked", !isChecked);
   }
   
   return (

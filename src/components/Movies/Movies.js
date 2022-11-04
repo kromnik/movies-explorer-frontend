@@ -8,7 +8,7 @@ import Footer from '../Footer/Footer';
 
 function Movies({ onSortShortMovie, foundMovies, ...props }) {
   const [shortMovies, setShortMovies] = useState([]);
-  const [isChecked, setIsChecked] = useState(false);
+  const [isChecked, setIsChecked] = useState(localStorage.getItem("checked"));
 
   useEffect(() => {
     props.setMessage()
