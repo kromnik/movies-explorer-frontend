@@ -46,7 +46,7 @@ function SearchForm({ onSearchMovies, setIsChecked }) {
                 autoComplete="off"
                 minLength="1"
                 maxLength="150"
-                value={searchQuery}
+                value={searchQuery ?? ""}
                 onChange={handleInputChange}
               />
               <span className='search__input-error'>{errorMessage}</span>

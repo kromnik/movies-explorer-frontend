@@ -2,12 +2,11 @@ import { useState } from 'react';
 import './FilterCheckbox.css';
 
 function FilterCheckbox({ onFilterCheckBoxToggle }) {
-  const [isChecked, setIsChecked] = useState(false);
+  const [isChecked, setIsChecked] = useState(localStorage.getItem("checked"));
   
   function handleChange(e) {
     onFilterCheckBoxToggle(!isChecked);
     setIsChecked(e.target.checked);
-    localStorage.setItem("checked", !isChecked);
   }
   
   return (

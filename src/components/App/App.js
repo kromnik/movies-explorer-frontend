@@ -28,7 +28,6 @@ import {
 function App() {
   const [currentUser, setCurrentUser] = useState({ name: "", email: "" });
   const [loggedIn, setLoggedIn] = useState(!!localStorage.jwt);
-  const [movies, setMovies] = useState([]);
   const [savedMovies, setSavedMovies] = useState([]);
   const [foundMovies, setFoundMovies] = useState([]);
   const [foundSavedMovies, setFoundSavedMovies] = useState([]);
@@ -36,6 +35,7 @@ function App() {
   const [mainApiLoading, setMainApiLoading] = useState(true);
   const [formSending, setFormSending] = useState(false);
   const [message, setMessage] = useState(null);
+  const [isChecked, setIsChecked] = useState(false);
   const history = useHistory();
   const token = localStorage.getItem("jwt");
   const resetMessage = () => {
@@ -45,7 +45,6 @@ function App() {
   useEffect(() => {
     if (loggedIn) {
       const currentUserLocalStorage = localStorage.getItem("currentUser");
-      // const moviesLocalStorage = localStorage.getItem("movies");
       const savedMoviesLocalStorage = localStorage.getItem("savedMovies");
 
       if (currentUserLocalStorage && savedMoviesLocalStorage) {
@@ -76,25 +75,6 @@ function App() {
             console.log(err);
           });
       }
-
-      // if (moviesLocalStorage) {
-      //   setMovies(JSON.parse(moviesLocalStorage));
-      //   setMoviesApiLoading(false);
-      // } else {
-      //   moviesApi
-      //     .getMovies()
-      //     .then((res) => {
-      //       localStorage.setItem("movies", JSON.stringify(res || []));
-      //       setMovies(res || []);
-      //       setMoviesApiLoading(false);
-      //     })
-      //     .catch((err) => {
-      //       if (err.status === 500) {
-      //         setMessage(QUERY_SERVER_ERROR_MESSAGE);
-      //       }
-      //       console.log(err);
-      //     });
-      // }
     }
   }, [loggedIn, token]);
 
@@ -115,20 +95,19 @@ function App() {
     return sortShortMoviesArray;
   }
 
-  function handleSearchMovies(query) {
-    const moviesLocalStorage = JSON.parse(localStorage.getItem("movies"));
-    if (moviesLocalStorage && moviesLocalStorage.length > 0) {
-      setMovies(moviesLocalStorage);
-      console.log(moviesLocalStorage);
-    } else {
+  useEffect(() => {
+    setIsChecked();
+  }, [setIsChecked]);
+
+  async function handleSearchMovies(query) {
+    let movies = JSON.parse(localStorage.getItem("movies"));
+    if (!movies) {
       setMoviesApiLoading(true);
-      moviesApi
+      await moviesApi
         .getMovies()
         .then((res) => {
-          console.log(res);
-          localStorage.setItem("movies", JSON.stringify(res || []));
-          setMovies(res || []);
-          console.log(moviesLocalStorage);
+          localStorage.setItem("movies", JSON.stringify(res));
+          movies = res;
         })
         .catch((err) => {
           if (err.status === 500) {
@@ -137,24 +116,24 @@ function App() {
           console.log(err);
         })
         .finally(() => setMoviesApiLoading(false));
-    };   
-    
+    }
     const searchQuery = query.toLowerCase();
-    console.log(movies);
+
     const foundMoviesResult = movies.filter((movie) => {
       return movie.nameRU.toLowerCase().includes(searchQuery) ||
         movie.nameEN.toLowerCase().includes(searchQuery);
     });
-    console.log(foundMoviesResult);
+
     if (foundMoviesResult.length === 0) {
       setFoundMovies([]);
       responseMessage(QUERY_NOT_FOUND_MESSAGE);
     } else {
       setFoundMovies(foundMoviesResult);
+      localStorage.setItem("foundMovies", JSON.stringify(foundMoviesResult));
       localStorage.setItem("query", searchQuery);
+      localStorage.setItem("checked", isChecked);
       resetMessage();
     };
-
   };
 
   function handleSaveMovie(movie) {
@@ -295,8 +274,8 @@ function App() {
     localStorage.removeItem("jwt");
     setFoundMovies([]);
     setSavedMovies([]);
-    setMovies([]);
     setFoundSavedMovies([]);
+    setIsChecked(false);
     resetMessage();
     localStorage.clear();
     history.push("/");
@@ -321,6 +300,8 @@ function App() {
                 onSaveMovie={handleSaveMovie}
                 onSortShortMovie={handleSortShortMovies}
                 onDeleteSavedMovie={handleDeleteMovie}
+                isChecked={isChecked}
+                setIsChecked={setIsChecked}
                 message={message}
                 setMessage={setMessage}
               />

@@ -34,7 +34,9 @@ function MoviesCardList({ savedMovies, ...props }) {
     }
   };
 
-  useEffect(() => renderCardsMovies(), [renderCardsMovies]);
+  useEffect(() => {
+    renderCardsMovies();
+  }, [renderCardsMovies]);
 
   useEffect(() => {
     window.addEventListener("resize", renderCardsMovies);

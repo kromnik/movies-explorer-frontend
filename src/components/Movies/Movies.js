@@ -6,9 +6,9 @@ import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Footer from '../Footer/Footer';
 
-function Movies({ onSortShortMovie, foundMovies, ...props }) {
+function Movies({ onSortShortMovie, foundMovies, isChecked, setIsChecked, ...props }) {
   const [shortMovies, setShortMovies] = useState([]);
-  const [isChecked, setIsChecked] = useState(localStorage.getItem("checked"));
+  // const [isChecked, setIsChecked] = useState(false);
 
   useEffect(() => {
     props.setMessage()
@@ -25,7 +25,7 @@ function Movies({ onSortShortMovie, foundMovies, ...props }) {
         <SearchForm onSearchMovies={props.onSearchMovies} setIsChecked={setIsChecked} />
         <MoviesCardList
           isLoading={props.isLoading}
-          moviesCardList={isChecked ? shortMovies : foundMovies}
+          moviesCardList={isChecked ? shortMovies : JSON.parse(localStorage.getItem("foundMovies"))}
           savedMovies={props.savedMovies}
           onSaveMovie={props.onSaveMovie}
           onDeleteSavedMovie={props.onDeleteSavedMovie}
