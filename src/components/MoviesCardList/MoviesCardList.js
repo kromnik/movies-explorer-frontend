@@ -3,6 +3,7 @@ import './MoviesCardList.css';
 
 import MovieCard from '../MovieCard/MovieCard';
 import Preloader from '../Preloader/Preloader';
+import UseWindowSize from '../../utils/UseWindowSize';
 import { 
   CARDS_ARRAY_MAX_WIN_SIZE,
   CARDS_ARRAY_MEDIUM_WIN_SIZE,
@@ -13,21 +14,22 @@ import {
 
 function MoviesCardList({ savedMovies, ...props }) {
   const moviesCardList = props.moviesCardList || [];
-  const windowWidth = window.innerWidth;
+  // const windowWidth = window.innerWidth;
   const [cardsMoviesArray, setCardsMoviesArray] = useState(0);
+  const size = UseWindowSize();
 
   const renderCardsMovies = useCallback(() => {
-    if (windowWidth > 1279) {
+    if (size > 1279) {
       setCardsMoviesArray(CARDS_ARRAY_MAX_WIN_SIZE);
-    } else if (windowWidth > 767 && windowWidth <= 1279) {
+    } else if (size > 767 && size <= 1279) {
       setCardsMoviesArray(CARDS_ARRAY_MEDIUM_WIN_SIZE);
     } else {
       setCardsMoviesArray(CARDS_ARRAY_MIN_WIN_SIZE);
     }
-  }, [windowWidth]);
+  }, []);
   
   const handleNextCardClick = () => {
-    if (windowWidth > 1279) {
+    if (size > 1279) {
       setCardsMoviesArray(cardsMoviesArray + NEXT_CARDS_MAX_WIN_SIZE);
     } else {
       setCardsMoviesArray(cardsMoviesArray + NEXT_CARDS_MEDIUM_WIN_SIZE);
@@ -36,14 +38,14 @@ function MoviesCardList({ savedMovies, ...props }) {
 
   useEffect(() => {
     renderCardsMovies();
-  }, [renderCardsMovies]);
-
-  useEffect(() => {
-    window.addEventListener("resize", renderCardsMovies);
-    return () => {
-      window.removeEventListener("resize", renderCardsMovies);
-    };
   }, []);
+
+  // useEffect(() => {
+  //   window.addEventListener("resize", renderCardsMovies);
+  //   return () => {
+  //     window.removeEventListener("resize", renderCardsMovies);
+  //   };
+  // }, []);
   
   return (
     <>

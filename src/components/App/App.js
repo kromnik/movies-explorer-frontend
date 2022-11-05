@@ -10,7 +10,6 @@ import Profile from "../Profile/Profile";
 import Register from "../Register/Register";
 import Login from "../Login/Login";
 import PageNotFound from "../PageNotFound/PageNotFound";
-// import Preloader from "../Preloader/Preloader";
 import moviesApi from "../../utils/MoviesApi";
 import mainApi from "../../utils/MainApi";
 import { SHORT_MOVIE } from "../../utils/constants";
