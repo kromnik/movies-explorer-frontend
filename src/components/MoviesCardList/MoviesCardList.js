@@ -43,7 +43,7 @@ function MoviesCardList({ savedMovies, ...props }) {
     return () => {
       window.removeEventListener("resize", renderCardsMovies);
     };
-  }, [renderCardsMovies]);
+  }, []);
   
   return (
     <>

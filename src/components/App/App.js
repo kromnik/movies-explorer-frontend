@@ -29,13 +29,13 @@ function App() {
   const [currentUser, setCurrentUser] = useState({ name: "", email: "" });
   const [loggedIn, setLoggedIn] = useState(!!localStorage.jwt);
   const [savedMovies, setSavedMovies] = useState([]);
-  const [foundMovies, setFoundMovies] = useState([]);
+  const [foundMovies, setFoundMovies] = useState(JSON.parse(localStorage.getItem("foundMovies")));
   const [foundSavedMovies, setFoundSavedMovies] = useState([]);
   const [moviesApiLoading, setMoviesApiLoading] = useState(false);
   const [mainApiLoading, setMainApiLoading] = useState(true);
   const [formSending, setFormSending] = useState(false);
   const [message, setMessage] = useState(null);
-  const [isChecked, setIsChecked] = useState(false);
+  const [isChecked, setIsChecked] = useState(JSON.parse(localStorage.getItem("checked")));
   const history = useHistory();
   const token = localStorage.getItem("jwt");
   const resetMessage = () => {
@@ -95,10 +95,6 @@ function App() {
     return sortShortMoviesArray;
   }
 
-  useEffect(() => {
-    setIsChecked();
-  }, [setIsChecked]);
-
   async function handleSearchMovies(query) {
     let movies = JSON.parse(localStorage.getItem("movies"));
     if (!movies) {
@@ -131,7 +127,7 @@ function App() {
       setFoundMovies(foundMoviesResult);
       localStorage.setItem("foundMovies", JSON.stringify(foundMoviesResult));
       localStorage.setItem("query", searchQuery);
-      localStorage.setItem("checked", isChecked);
+      localStorage.setItem("checked", JSON.stringify(isChecked));
       resetMessage();
     };
   };

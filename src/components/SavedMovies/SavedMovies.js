@@ -31,7 +31,7 @@ function SavedMovies({ onSortShortMovie, savedMovies, foundSavedMovies, ...props
     <div className='page-main'>
       <Header loggedIn={props.loggedIn} />
       <main className='main__content main__content_size_medium main__content_size_least'>
-        <SavedSearchForm onSearchMovies={props.onSearchSavedMovies} setIsChecked={setIsChecked} />
+        <SavedSearchForm onSearchMovies={props.onSearchSavedMovies} setIsChecked={setIsChecked} isChecked={isChecked} />
         <SavedMoviesCardList
           isLoading={props.isLoading}
           savedMoviesCardList={isChecked ? shortMovies : savedMoviesArray}

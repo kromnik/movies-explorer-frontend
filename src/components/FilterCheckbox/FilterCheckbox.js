@@ -1,8 +1,7 @@
-import { useState } from 'react';
+import React from 'react';
 import './FilterCheckbox.css';
 
-function FilterCheckbox({ onFilterCheckBoxToggle }) {
-  const [isChecked, setIsChecked] = useState(localStorage.getItem("checked"));
+function FilterCheckbox({ onFilterCheckBoxToggle, isChecked, setIsChecked }) {
   
   function handleChange(e) {
     onFilterCheckBoxToggle(!isChecked);
@@ -15,7 +14,7 @@ function FilterCheckbox({ onFilterCheckBoxToggle }) {
         <input 
           className='filter-checkbox__input'
           type='checkbox'
-          checked={isChecked}
+          checked={isChecked ?? false}
           onChange={handleChange}
         />
         <span className='filter-checkbox__tumbler'></span>

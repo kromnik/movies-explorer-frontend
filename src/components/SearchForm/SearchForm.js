@@ -5,10 +5,10 @@ import IconSearch from '../IconSearch/IconSearch';
 import SearchButton from '../SearchButton/SearchButton';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 
-function SearchForm({ onSearchMovies, setIsChecked }) {
+function SearchForm({ onSearchMovies, setIsChecked, isChecked }) {
   const [searchQuery, setSearchQuery] = useState(localStorage.getItem("query"));
   const [isShortMovies, setIsShortMovies] = useState(false);
-  const [errorMessage, setErrorMessage] =useState('');
+  const [errorMessage, setErrorMessage] = useState('');
   
   function handleInputChange(e) {
     setSearchQuery(e.target.value);
@@ -52,7 +52,7 @@ function SearchForm({ onSearchMovies, setIsChecked }) {
               <span className='search__input-error'>{errorMessage}</span>
               <SearchButton />
             </div>
-            <FilterCheckbox  onFilterCheckBoxToggle={handleFilterCheckBoxToggle} />
+            <FilterCheckbox  onFilterCheckBoxToggle={handleFilterCheckBoxToggle} setIsChecked={setIsChecked} isChecked={isChecked} />
           </form>
         </div>
     </section>

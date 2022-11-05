@@ -8,13 +8,13 @@ import Footer from '../Footer/Footer';
 
 function Movies({ onSortShortMovie, foundMovies, isChecked, setIsChecked, ...props }) {
   const [shortMovies, setShortMovies] = useState([]);
-  // const [isChecked, setIsChecked] = useState(false);
 
   useEffect(() => {
     props.setMessage()
   }, []);
   
   useEffect(() => {
+    localStorage.setItem("checked", isChecked);
     isChecked && setShortMovies(onSortShortMovie(foundMovies));
   }, [isChecked, onSortShortMovie, foundMovies]);
 
@@ -22,7 +22,7 @@ function Movies({ onSortShortMovie, foundMovies, isChecked, setIsChecked, ...pro
     <div className='page-main'>
       <Header loggedIn={props.loggedIn} />
       <main className='main__content main__content_size_medium main__content_size_least'>
-        <SearchForm onSearchMovies={props.onSearchMovies} setIsChecked={setIsChecked} />
+        <SearchForm onSearchMovies={props.onSearchMovies} setIsChecked={setIsChecked} isChecked={isChecked}/>
         <MoviesCardList
           isLoading={props.isLoading}
           moviesCardList={isChecked ? shortMovies : JSON.parse(localStorage.getItem("foundMovies"))}
