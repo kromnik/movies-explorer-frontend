@@ -88,10 +88,12 @@ function App() {
   }
 
   function handleSortShortMovies(movies) {
-    const sortShortMoviesArray = movies.filter((movie) =>
-      movie.duration <= SHORT_MOVIE
-    );
+    if (movies) {
+      const sortShortMoviesArray = movies.filter((movie) =>
+        movie.duration <= SHORT_MOVIE
+      ); 
     return sortShortMoviesArray;
+    } 
   }
 
   async function handleSearchMovies(query) {
