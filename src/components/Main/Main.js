@@ -9,10 +9,10 @@ import AboutMe from '../AboutMe/AboutMe';
 import Footer from '../Footer/Footer';
 
 
-function Main() {
+function Main({ loggedIn }) {
   return (
     <div className='page-main'>
-      <Header loggedIn={false}/>
+      <Header loggedIn={loggedIn}/>
       <main className='main'>
         <Promo />
         <NavTab />

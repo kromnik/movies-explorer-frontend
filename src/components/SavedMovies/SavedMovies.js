@@ -1,31 +1,44 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './SavedMovies.css';
 
 import Header from '../Header/Header';
-import SearchForm from '../SearchForm/SearchForm';
-import Preloader from '../Preloader/Preloader';
+import SavedSearchForm from '../SavedSearchForm/SavedSearchForm';
 import SavedMoviesCardList from '../SavedMoviesCardList/SavedMoviesCardList';
 import Footer from '../Footer/Footer';
 
-function SavedMovies({ loggedIn }) {
-  const [isLoading, setIsLoading] = useState(false);
+function SavedMovies({ onSortShortMovie, savedMovies, foundSavedMovies, ...props }) {
+  const [shortMovies, setShortMovies] = useState([]);
+  const [isChecked, setIsChecked] = useState(false);
+  let savedMoviesArray = foundSavedMovies.length > 0 ? foundSavedMovies : savedMovies;
   
+  if (props.message) {
+    savedMoviesArray = [];
+  };
+  
+  useEffect(() => {
+    props.setMessage()
+  }, []);
+
+  useEffect(() => {
+    isChecked && !props.message && setShortMovies(onSortShortMovie(savedMoviesArray));
+  }, [isChecked, props.message, onSortShortMovie, savedMoviesArray]);
+
+  useEffect(() => {
+    props.setFoundSavedMovies([])
+  }, []);
+
   return (
     <div className='page-main'>
-      <Header loggedIn={loggedIn}/>
-      <main 
-        className='main__content main__content_size_medium main__content_size_least'
-      > 
-        <SearchForm />
-        {isLoading ? (
-          <Preloader />
-        ) : (
-          <SavedMoviesCardList 
-            className="movies-card-list__elements_type_save 
-              movies-card-list__else-btn_type_save" 
-          />
-        )}
-      </main>  
+      <Header loggedIn={props.loggedIn} />
+      <main className='main__content main__content_size_medium main__content_size_least'>
+        <SavedSearchForm onSearchMovies={props.onSearchSavedMovies} setIsChecked={setIsChecked} isChecked={isChecked} />
+        <SavedMoviesCardList
+          isLoading={props.isLoading}
+          savedMoviesCardList={isChecked ? shortMovies : savedMoviesArray}
+          onDeleteSavedMovie={props.onDeleteSavedMovie}
+          message={props.message}
+        />
+      </main>
       <Footer />
     </div>
   )

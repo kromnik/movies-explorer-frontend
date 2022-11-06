@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react';
-import './SearchForm.css';
 
 import IconSearch from '../IconSearch/IconSearch';
 import SearchButton from '../SearchButton/SearchButton';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 
-function SearchForm({ onSearchMovies, setIsChecked, isChecked }) {
-  const [searchQuery, setSearchQuery] = useState(localStorage.getItem("query"));
+function SavedSearchForm({ onSearchMovies, setIsChecked, isChecked }) {
+  const [searchQuery, setSearchQuery] = useState("");
   const [isShortMovies, setIsShortMovies] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   
@@ -46,7 +45,7 @@ function SearchForm({ onSearchMovies, setIsChecked, isChecked }) {
                 autoComplete="off"
                 minLength="1"
                 maxLength="150"
-                value={searchQuery ?? ""}
+                value={searchQuery}
                 onChange={handleInputChange}
               />
               <span className='search__input-error'>{errorMessage}</span>
@@ -59,4 +58,4 @@ function SearchForm({ onSearchMovies, setIsChecked, isChecked }) {
   )
 }
 
-export default SearchForm;
+export default SavedSearchForm;

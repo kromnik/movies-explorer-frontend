@@ -1,22 +1,59 @@
-import React from "react";
+import { useState, useEffect, useCallback } from 'react';
 
-import { moviesCards } from "../../utils/dataMovies";
-import SavedMoviesCard from "../SavedMoviesCard/SavedMoviesCard";
+import Preloader from '../Preloader/Preloader';
+import SavedMovieCard from "../SavedMovieCard/SavedMovieCard";
+import {
+  CARDS_ARRAY_MAX_WIN_SIZE,
+  CARDS_ARRAY_MEDIUM_WIN_SIZE,
+  CARDS_ARRAY_MIN_WIN_SIZE,
+} from '../../utils/constants';
 
-function SavedMoviesCardList() {
+function SavedMoviesCardList(props) {
+  const windowWidth = window.innerWidth;
+  const [cardsSavedMoviesArray, setCardsSavedMoviesArray] = useState(0);
+
+  const renderCardsSavedMovies = useCallback(() => {
+    if (windowWidth > 1279) {
+      setCardsSavedMoviesArray(CARDS_ARRAY_MAX_WIN_SIZE);
+    } else if (windowWidth > 767 && windowWidth <= 1279) {
+      setCardsSavedMoviesArray(CARDS_ARRAY_MEDIUM_WIN_SIZE);
+    } else {
+      setCardsSavedMoviesArray(CARDS_ARRAY_MIN_WIN_SIZE);
+    }
+  }, [windowWidth]);
+
+  useEffect(() => renderCardsSavedMovies(), [renderCardsSavedMovies]);
+
+  useEffect(() => {
+    window.addEventListener("resize", renderCardsSavedMovies);
+    return () => {
+      window.removeEventListener("resize", renderCardsSavedMovies);
+    };
+  }, [renderCardsSavedMovies]);
+
   return (
     <>
-      <section className="movies-card-list__elements || 
-        movies-card-list__elements movies-card-list__elements_type_save">
-        {moviesCards.slice(0, 3).map((card) => (
-          <SavedMoviesCard key={card.id} {...card} />
-        ))}
-      </section>
-      <button 
-        className="movies-card-list__else-btn || 
-          movies-card-list__else-btn movies-card-list__else-btn_type_save " 
-        type="button">
-      </button>
+      {props.isLoading ?
+        <Preloader /> : (
+          <>
+            {props.message &&
+              <span className='movies-card-list__message'>
+                {props.message}
+              </span>}
+            <section className="movies-card-list__elements">
+              {props.savedMoviesCardList.slice(0, cardsSavedMoviesArray).map((movie) => {
+                return (
+                  <SavedMovieCard
+                    key={movie._id}
+                    card={movie}
+                    onDeleteSavedMovie={props.onDeleteSavedMovie}
+                  />
+                );
+              })}
+            </section>
+          </>
+        )
+      }
     </>
   );
 }
