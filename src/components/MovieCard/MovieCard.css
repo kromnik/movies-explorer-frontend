@@ -1,0 +1,102 @@
+.movie-card {
+  max-width: 270px;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background: #222222;
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.movie-card__link {
+  text-decoration: none;
+  width: 100%;
+  transition: opacity .4s ease-in-out;
+}
+
+.movie-card__link:hover {
+  opacity: .6;
+  cursor: pointer;
+}
+
+.movie-card__image {
+  width: 100%;
+  height: 151px;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  object-fit: cover;
+  object-position: center;
+  overflow: hidden;
+  border: none;
+}
+
+.movie-card__name-checkbox-block {
+  margin: 0;
+  padding: 14px 12px 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  column-gap: 24px;
+}
+
+.movie-card__name {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 16px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.movie-card__card-button {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  border: none;
+  background: transparent;
+}
+
+.movie-card__duration {
+  margin: 0 auto 14px 12px;
+  padding: 0;
+  box-sizing: border-box;
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 13px;
+  color: #8B8B8B;
+}
+
+@media screen and (max-width: 1279px) {
+  .movie-card {
+    max-width: 339px;
+  }
+
+  .movie-card__image {
+    height: 190px;
+  }
+
+  .movie-card__name-checkbox-block {
+    column-gap: 93px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .movie-card {
+    max-width: 300px;
+  }
+
+  .movie-card__image {
+    height: 168px;
+  }
+
+  .movie-card__name-checkbox-block {
+    column-gap: 54px;
+  }
+}

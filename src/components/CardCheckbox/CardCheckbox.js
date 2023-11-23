@@ -1,13 +1,15 @@
 import React from 'react';
 import './CardCheckbox.css';
 
-function CardCheckbox() {
+function CardCheckbox({ onClick, isSaved }) {
   return (
     <div className='card-checkbox'>
       <label className='card-checkbox__label'>
-        <input 
+        <input
           className='card-checkbox__input'
-          type='checkbox' 
+          type='checkbox'
+          defaultChecked={isSaved}
+          onClick={onClick}
         />
         <span className='card-checkbox__tumbler'></span>
       </label>
